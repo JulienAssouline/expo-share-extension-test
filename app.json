@@ -2,6 +2,7 @@
   "expo": {
     "name": "expo-share-extension-test",
     "slug": "expo-share-extension-test",
+    "scheme": "exposhareextensiontest",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,20 +12,44 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
+    "assetBundlePatterns": ["**/*"],
+    "plugins": [
+      // [
+      //   "./plugins/withAndroidShareExtension/index",
+      //   {
+      //     "androidIntentFilters": ["text/*", "image/*"]
+      //   }
+      // ],
+      [
+        "expo-config-plugin-ios-share-extension",
+        {
+          "activationRules": {
+            "NSExtensionActivationSupportsText": true,
+            "NSExtensionActivationSupportsWebURLWithMaxCount": 1,
+            "NSExtensionActivationSupportsWebPageWithMaxCount": 1,
+            "NSExtensionActivationSupportsImageWithMaxCount": 1
+          }
+        }
+      ]
     ],
     "ios": {
+      "bundleIdentifier": "com.example.exposhareextensiontest",
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.example.exposhareextensiontest"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "xxx-xxx-xxx-xxx-xxx"
+      }
     }
   }
 }

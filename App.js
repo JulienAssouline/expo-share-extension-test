@@ -1,10 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from "react";
+import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
+
+import useShareIntent from "./hooks/useShareIntent";
 
 export default function App() {
+  const { shareIntent, resetShareIntent } = useShareIntent();
+
+  console.log(shareIntent, "shareIntent");
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      {!shareIntent && <Text>No Share intent detected</Text>}
+      {!!shareIntent && <Text style={styles.gap}>Share intent value:</Text>}
+      {!!shareIntent && !shareIntent.uri && (
+        <Text style={styles.gap}>{JSON.stringify(shareIntent)}</Text>
+      )}
+      {shareIntent?.uri && (
+        <Image source={shareIntent} style={[styles.image, styles.gap]} />
+      )}
+      {!!shareIntent && <Button onPress={resetShareIntent} title="Reset" />}
       <StatusBar style="auto" />
     </View>
   );
@@ -13,8 +28,22 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 20,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+  },
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+  },
+  gap: {
+    marginBottom: 20,
   },
 });
